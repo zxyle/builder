@@ -1,0 +1,17 @@
+package {{ basePackage }}.biz.sample.controller.consumes;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class ContentTypeController {
+
+    // 该方法只处理content-type=application/json的请求
+    @GetMapping(value = "/json", consumes = "application/json")
+    @ResponseBody
+    public String exceptJson() {
+        return "这是一个json请求";
+    }
+
+}

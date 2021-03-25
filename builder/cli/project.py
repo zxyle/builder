@@ -1,0 +1,205 @@
+import os
+
+from jinja2 import Environment, FileSystemLoader
+
+from builder.cli.filters import string_camelcase, sanitize, underscore
+from builder.cli.git import git_init
+from builder.cli.spider import Starter
+from builder.cli.utils import copytree
+from builder.cli.pom import properties, dependencies
+
+
+class Template:
+    def __init__(self):
+        pass
+
+    def loads(self):
+        pass
+
+    def render(self):
+        pass
+
+
+def load_temps(dst):
+    """
+    加载指定目录的模板
+    :param dst:
+    :return:
+    """
+    extensions = "tmpl"
+    env = Environment(
+        loader=FileSystemLoader(dst)
+    )
+
+    # 自定义过滤器
+    env.filters['camelcase'] = string_camelcase
+    env.filters['sanitize'] = sanitize
+
+    return [env.get_template(t) for t in env.list_templates(extensions)]
+
+
+def render_template_file(t, **kwargs):
+    """
+    渲染模板
+    :param t: 模板
+    :param kwargs: 元数据
+    :return:
+    """
+    path = t.filename
+    content = t.render(kwargs)
+
+    render_path = path[:-len('.tmpl')] if path.endswith('.tmpl') else path
+
+    if path.endswith('.tmpl'):
+        os.rename(path, render_path)
+
+    with open(render_path, 'wb') as fp:
+        fp.write(content.encode('utf8'))
+
+
+def recursive_delete(path):
+    if os.path.isdir(path):
+        files = os.listdir(path)
+        for file in files:
+            p = os.path.join(path, file)
+            if os.path.isdir(p):
+                recursive_delete(p)
+            else:
+                os.remove(p)
+        os.rmdir(path)
+    else:
+        os.remove(path)
+
+
+class Base:
+    #
+    empty_files = []
+    output_dir = ""
+    root_dir = ""
+    metadata = {}
+
+    # 复制到目标目录
+    # 渲染模板
+    def copy_template(self, temp_name, dst, project_name):
+        # 复制模板目录到目标目录下
+        tempdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/{temp_name}")
+        dst = os.getcwd() if dst == "." else dst
+        target_dir = os.path.join(dst, project_name)
+        copytree(tempdir, target_dir)
+        self.output_dir = target_dir
+        return target_dir
+
+    def render(self, target_dir, args):
+        # 遍历该目录下所有文件, 找到tmpl文件
+        templates = load_temps(target_dir)
+
+        # render
+        for template in templates:
+            render_template_file(template, **args)
+
+    def after(self):
+        self.touch_empty_files()
+        git_init(self.output_dir)
+
+    def docker_support(self):
+        self.empty_files.extend([
+            "Dockerfile",
+            "docker-compose.yml",
+            ".dockerignore",
+        ])
+
+    def touch_empty_files(self):
+        for file in self.empty_files:
+            file_path = os.path.join(self.output_dir, file)
+            dir_name = os.path.dirname(file_path)
+            if not os.path.exists(dir_name):
+                os.makedirs(dir_name)
+            with open(file_path, 'w'):
+                pass
+
+    def input_prompt(self):
+        for k, v in self.metadata.items():
+            v = input(f"input {k}: ", )
+            if v:
+                self.metadata.update({k: v})
+
+
+class SpringProject(Base):
+    temp_name = "spring"
+    metadata = {
+        "group": "com.example",
+        "artifact": "demo",
+    }
+
+    def copy_other(self, dst, group, artifact):
+        group_path = "/".join(group.split("."))
+        dst = os.getcwd() if dst == "." else dst
+        target_dir = os.path.join(dst, artifact)
+        app_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/app")
+        copytree(app_dir, f"{target_dir}/src/main/java/{group_path}/{sanitize(artifact)}")
+
+    def run(self, dst):
+        self.input_prompt()
+        group = self.metadata.get("group")
+        artifact = self.metadata.get("artifact")
+        self.metadata.update({
+            "properties": properties,
+            "dependencies": dependencies,
+            "basePackage": f"{group}.{sanitize(artifact)}",
+            "dbName": underscore(artifact),
+        })
+        s = Starter(self.metadata)
+        s.download()
+        s.unzip(dst)
+        s.cleanup()
+
+        self.empty_files.extend([
+            "docs/开发手册.md",
+            "docs/部署手册.md",
+            "docs/代码规范.md",
+        ])
+
+        self.copy_other(dst, group, artifact)
+
+        target_dir = self.copy_template(self.temp_name, dst, artifact)
+        self.render(target_dir, self.metadata)
+        self.after()
+
+    def clean(self):
+        pass
+
+
+class PythonProject(Base):
+    temp_name = "python"
+    metadata = {
+        "project_name": "awesome",
+    }
+
+    def run(self, dst):
+        self.input_prompt()
+        project_name = self.metadata.get("project_name")
+        target_dir = self.copy_template(self.temp_name, dst, project_name)
+        self.render(target_dir, self.metadata)
+        self.docker_support()
+        self.empty_files.extend([
+            "requirements.txt",
+            "main.py",
+            ".gitignore",
+            "setup.cfg",
+            "LICENSE",
+            "tests/__init__.py",
+            f"{project_name}/__init__.py",
+            "scripts/__init__.py",
+            "docs/guide.md",
+            "docs/TODO.md",
+            "MANIFEST.in",
+        ])
+        self.after()
+
+
+class FlaskProject(Base):
+    pass
+
+
+class GolangProject(Base):
+    pass

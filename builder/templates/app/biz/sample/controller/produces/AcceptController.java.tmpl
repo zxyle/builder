@@ -1,0 +1,16 @@
+package {{ basePackage }}.biz.sample.controller.produces;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class AcceptController {
+    // 请求头Accept = application/json 才能执行该请求
+    @GetMapping(value = "/accept", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String demo() {
+        return "请求成功";
+    }
+}

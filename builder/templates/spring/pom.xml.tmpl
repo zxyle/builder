@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>{{ bootVersion }}</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>{{ group }}</groupId>
+	<artifactId>{{ artifact }}</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>{{ artifact }}</name>
+	<description>{{ description }}</description>
+	{%- if packaging != 'jar' %}
+    <packaging>{{ packaging }}</packaging>
+    {%- endif %}
+
+	<properties>
+	    {%- for property in properties %}
+	    <{{ property.element }}>{{ property.value }}</{{ property.element }}>
+		{%- endfor %}
+	</properties>
+
+	<dependencies>
+        {%- for dependency in dependencies %}
+        <dependency>
+			<groupId>{{ dependency.group_id }}</groupId>
+			<artifactId>{{ dependency.artifact_id }}</artifactId>
+			{%- if dependency.scope %}
+			<scope>{{ dependency.scope }}</scope>
+			{%- endif %}
+			{%- if dependency.optional %}
+			<optional>{{ dependency.optional }}</optional>
+			{%- endif %}
+			{%- if dependency.version %}
+			<version>{{ dependency.version }}</version>
+			{%- endif %}
+			{%- if dependency.exclusions  %}
+			<exclusions>
+			    {% for exclusion in dependency.exclusions %}
+                <exclusion>
+                    <groupId>{{ exclusion.group_id }}</groupId>
+                    <artifactId>{{ exclusion.artifact_id }}</artifactId>
+                </exclusion>
+                {%- endfor %}
+            </exclusions>
+			{%- endif %}
+		</dependency>
+        {%- endfor %}
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

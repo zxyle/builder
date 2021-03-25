@@ -1,0 +1,47 @@
+package {{ basePackage }}.config.interceptor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.util.regex.Pattern;
+
+public class UserAgentInterceptor implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String ua = request.getHeader("User-Agent");
+        ua = ua.toLowerCase();
+        String[] tools = {
+                "curl",        // curl/7.55.1
+                "wget",        // Wget/1.14 (linux-gnu)
+                "requests",    // python-requests/2.24.0
+                "aiohttp",     // Python/3.7 aiohttp/3.7.2
+                "scrapy",      // Scrapy/2.0.0 (+https://scrapy.org)
+                "urllib",      // Python-urllib/3.7
+                "httpx",       // python-httpx/0.16.1
+                "twisted",     // Twisted PageGetter
+                "tornado",     // Tornado/6.1
+                "httpclient",  // Apache-HttpClient/4.5.12 (Java/1.8.0_202)
+                "headless",    // Headless Browser such as PhantomJS puppeteer
+        };
+
+
+        for (String tool : tools) {
+            String pattern = ".*" + tool + ".*";
+
+            boolean isMatch = Pattern.matches(pattern, ua);
+            if (isMatch) {
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter writer = response.getWriter();
+                writer.println("禁止爬虫");
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

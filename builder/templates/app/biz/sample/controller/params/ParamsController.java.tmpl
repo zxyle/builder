@@ -1,0 +1,17 @@
+package {{ basePackage }}.biz.sample.controller.params;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class ParamsController {
+
+    // url必须带上指定的参数才能访问
+    // http://127.0.0.1:8090/update?action=save
+    @ResponseBody
+    @PostMapping(value = "/update", params = "action=save")
+    public String demo() {
+        return "请求成功";
+    }
+}
