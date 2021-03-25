@@ -78,8 +78,4 @@ dependencies = [
 properties = [
     Property("project.build.sourceEncoding", "UTF-8"),
     Property("argLine", "-Dfile.encoding=UTF-8"),
-    Property("maven.compiler.source", "1.8"),
-    Property("maven.compiler.target", "1.8"),
-    Property("maven.compiler.compilerVersion", "1.8"),
-    Property("java.version", "1.8"),
 ]

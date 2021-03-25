@@ -4,9 +4,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from builder.cli.filters import string_camelcase, sanitize, underscore
 from builder.cli.git import git_init
-from builder.cli.spider import Starter
+from builder.cli.pom import properties, dependencies, Property
 from builder.cli.utils import copytree
-from builder.cli.pom import properties, dependencies
 
 
 class Template:
@@ -83,7 +82,6 @@ class Base:
     def copy_template(self, temp_name, dst, project_name):
         # 复制模板目录到目标目录下
         tempdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/{temp_name}")
-        dst = os.getcwd() if dst == "." else dst
         target_dir = os.path.join(dst, project_name)
         copytree(tempdir, target_dir)
         self.output_dir = target_dir
@@ -118,8 +116,9 @@ class Base:
                 pass
 
     def input_prompt(self):
+        print("括号里为默认值.")
         for k, v in self.metadata.items():
-            v = input(f"input {k}: ", )
+            v = input(f"{k}: ({v}) ", )
             if v:
                 self.metadata.update({k: v})
 
@@ -129,29 +128,37 @@ class SpringProject(Base):
     metadata = {
         "group": "com.example",
         "artifact": "demo",
+        "description": "Demo project for Spring Boot",
+        "packaging": "jar",
+        "javaVersion": "1.8",
+        "bootVersion": "2.4.4",
     }
 
-    def copy_other(self, dst, group, artifact):
-        group_path = "/".join(group.split("."))
-        dst = os.getcwd() if dst == "." else dst
+    def copy_other(self, dst, group_path, artifact):
         target_dir = os.path.join(dst, artifact)
-        app_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/app")
-        copytree(app_dir, f"{target_dir}/src/main/java/{group_path}/{sanitize(artifact)}")
+        for p in ["main", "test"]:
+            _dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/spring/{p}")
+            copytree(_dir, f"{target_dir}/src/{p}/java/{group_path}/{sanitize(artifact)}")
 
     def run(self, dst):
         self.input_prompt()
         group = self.metadata.get("group")
         artifact = self.metadata.get("artifact")
+        base_package = f"{group}.{sanitize(artifact)}"
+        java_version = self.metadata.get("javaVersion")
+        properties.extend([
+            Property("maven.compiler.source", java_version),
+            Property("maven.compiler.target", java_version),
+            Property("maven.compiler.compilerVersion", java_version),
+            Property("java.version", java_version),
+        ])
         self.metadata.update({
             "properties": properties,
             "dependencies": dependencies,
-            "basePackage": f"{group}.{sanitize(artifact)}",
+            "basePackage": base_package,
             "dbName": underscore(artifact),
+            "bootVersion": self.metadata.get("bootVersion"),
         })
-        s = Starter(self.metadata)
-        s.download()
-        s.unzip(dst)
-        s.cleanup()
 
         self.empty_files.extend([
             "docs/开发手册.md",
@@ -159,10 +166,21 @@ class SpringProject(Base):
             "docs/代码规范.md",
         ])
 
-        self.copy_other(dst, group, artifact)
+        dst = os.getcwd() if dst == "." else dst
+        group_path = "/".join(group.split("."))
+        self.copy_other(dst, group_path, artifact)
 
-        target_dir = self.copy_template(self.temp_name, dst, artifact)
+        target_dir = self.copy_template(self.temp_name + "/root", dst, artifact)
         self.render(target_dir, self.metadata)
+
+        app_name = string_camelcase(artifact)
+        main_dir = f"{target_dir}/src/main/java/{group_path}/{app_name}"
+        test_dir = f"{target_dir}/src/test/java/{group_path}/{app_name}"
+
+        os.rename(f"{main_dir}/DemoApplication.java",
+                  f"{main_dir}/{app_name}Application.java")
+        os.rename(f"{test_dir}/DemoApplicationTests.java",
+                  f"{test_dir}/{app_name}ApplicationTests.java")
         self.after()
 
     def clean(self):

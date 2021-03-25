@@ -1,8 +1,8 @@
-package cn.tongdun.gec.freewayapi;
+package {{ basePackage }};
 
-import cn.tongdun.gec.freewayapi.biz.sys.entity.User;
-import cn.tongdun.gec.freewayapi.biz.sys.mapper.UserMapper;
-import cn.tongdun.gec.freewayapi.common.enums.SexEnum;
+import {{ basePackage }}.biz.sys.entity.User;
+import {{ basePackage }}.biz.sys.mapper.UserMapper;
+import {{ basePackage }}.common.enums.SexEnum;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class FreewayApiApplicationTests {
+class {{ artifact|camelcase }}ApplicationTests {
 
 	@Autowired
 	private UserMapper userMapper;
