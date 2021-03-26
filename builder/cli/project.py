@@ -116,6 +116,15 @@ class Base:
                 pass
 
     def input_prompt(self):
+        # TODO
+        # version
+        # description
+        # entry point (index.js)
+        # test command
+        # git repository
+        # keywords
+        # author
+        # license: (ISC)
         print("括号里为默认值.")
         for k, v in self.metadata.items():
             v = input(f"{k}: ({v}) ", )
