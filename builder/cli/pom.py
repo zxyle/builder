@@ -7,7 +7,6 @@ class Base:
         self.artifact_id = artifact_id
 
 
-# TODO 考虑是否需要一个注释
 class Dependency(Base):
     def __init__(self, group_id, artifact_id, version=None, scope=None, optional=None):
         super(Dependency, self).__init__(group_id, artifact_id)
@@ -15,6 +14,7 @@ class Dependency(Base):
         self.scope = scope
         self.optional = optional
         self.exclusions = []
+        self.comment = ""
 
     def add_exclude(self, group_id, artifact_id):
         exclusion = Exclusion(group_id, artifact_id)
