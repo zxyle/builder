@@ -1,59 +1,43 @@
-项目模板参考vuejs流程
-调研golang text template
-生成版权信息 copyright 使用模板继承
-使用漂亮的命令行工具rich进行交互
-生成时的增加选项 比如说mysql redis 等等
-制作homebrew包 参考ansible
-项目增加TODO文件
-增加录屏使用readme
-https://docs.brew.sh/Python-for-Formula-Authors
-https://github.com/Homebrew/homebrew-core/blob/c1c70e2f0abff8483f6c0a25e653def51123972b/Formula/apcupsd.rb
-借鉴spring boot plus
-使用asciinema进行操作录屏 参考如何制作yum debian
-创建项目记录
 
+## 已完成
+- 乐观锁
+- 逻辑删除
+- 初始化数据库文件
+- 定时邮件异步任务
+- 示例代码
+- mysql
+- 异常处理
+- 数据检验
+- 反爬虫
+- mybatis plus
+- git checkout 新的分支
+- 拦截器
+- 跨域
+- git 初始化
+- guava
+- caffeine缓存
+- swagger
+- commons
 
-
-1. 下载脚手架
-2. 补充.gitignore文件 .idea target
-3. 添加README.md application-dev|test|prod.properties
-4. 添加空文件
-5. 集成常用组件
-
-
-git 初始化
-
-
-guava
-caffeine缓存
-swagger
-commons
-git checkout 新的分支
-拦截器
-跨域
-日志配置跟java目录同级的 assembly开头
-mybatis plus
-异常处理
-数据检验
-反爬虫
-集成security
-集成mysql redis
-jwt
-集成docker javax
-自动化部署脚本
-接口限流
-重试机制
-arthas
-示例代码
-定时邮件异步任务
-websocket
-atomikos分布式事务
-线程池
-初始化数据库文件
-后台
-接口安全
-黑名单机制
-雪花算法
-单点登录
-乐观锁
-逻辑删除
+## 待完成
+- 集成spring security
+- 单点登录
+- 雪花算法
+- 黑名单机制
+- 接口安全
+- admin后台
+- 线程池
+- atomikos分布式事务
+- websocket
+- arthas
+- 重试机制
+- 接口限流
+- 自动化部署脚本
+- 集成docker jmx
+- JWT
+- 集成redis
+- 日志配置跟java目录同级的 assembly开头
+- 制作homebrew yum debian包 参考ansible
+- 增加录屏使用readme
+- 创建项目记录
+- 使用asciinema进行操作录屏

@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @RestController
 @RequestMapping("/api")
 @Validated
-public class Person2Controller {
+public class ValidationPathController {
 
     @GetMapping("/person/{id}")
     public ResponseEntity<Integer> getPersonByID(@Valid @PathVariable("id") @Max(value = 5, message = "超过 id 的范围了") Integer id) {

@@ -55,7 +55,7 @@ dependencies = [
     Dependency("org.springframework.boot", "spring-boot-starter-quartz"),
     Dependency("org.springframework.boot", "spring-boot-starter-cache"),
     Dependency("org.springframework.boot", "spring-boot-starter-freemarker"),
-    Dependency("org.springframework.boot", "spring-boot-starter-security"),
+    # Dependency("org.springframework.boot", "spring-boot-starter-security"),
     Dependency("org.springframework.boot", "spring-boot-devtools", scope="runtime", optional="true"),
     Dependency("mysql", "mysql-connector-java", scope="runtime"),
     Dependency("org.springframework.boot", "spring-boot-configuration-processor", optional="true"),

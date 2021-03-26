@@ -11,7 +11,7 @@ spring.datasource.url=jdbc:mysql://127.0.0.1:3306/{{ dbName }}?serverTimezone=GM
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # 日志
-logging.level.com.example.springbootwithmybatisplus.dao=debug
+logging.level.{{ basePackage }}.biz=debug
 
 {%- if 'mail' in libs %}
 # 邮件发送端配置(qq邮箱)
@@ -41,4 +41,6 @@ mybatis-plus.global-config.db-config.logic-delete-value=1
 mybatis-plus.global-config.db-config.logic-not-delete-value=0
 mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
 # 枚举包扫描
-mybatis-plus.type-enums-package=cn.tongdun.gec.freewayapi.common.enums
+mybatis-plus.type-enums-package={{ basePackage }}.common.enums
+
+spring.jackson.default-property-inclusion=non_null
