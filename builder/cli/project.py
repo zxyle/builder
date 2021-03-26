@@ -202,7 +202,6 @@ class PythonProject(Base):
         self.empty_files.extend([
             "requirements.txt",
             "main.py",
-            ".gitignore",
             "setup.cfg",
             "LICENSE",
             "tests/__init__.py",
