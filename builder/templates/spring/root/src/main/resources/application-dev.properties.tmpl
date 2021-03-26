@@ -1,17 +1,16 @@
+# servlet
 spring.servlet.multipart.max-file-size=300MB
 spring.servlet.multipart.max-request-size=1000MB
 spring.servlet.multipart.file-size-threshold=10KB
 spring.servlet.multipart.location=~/tmp
 
-#设置开启热部署
+# spring devtools
 spring.devtools.restart.enabled=true
-#重启目录
 spring.devtools.restart.additional-paths=src/main/java
 spring.devtools.restart.exclude=WEB-INF/**
-#页面不加载缓存，修改即时生效
 spring.devtools.freemarker.cache=false
 
-
+# mysql
 spring.datasource.driver-class-name=com.p6spy.engine.spy.P6SpyDriver
 spring.datasource.url=jdbc:p6spy:mysql://127.0.0.1:3306/{{ dbName }}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
 spring.datasource.username=root
@@ -25,14 +24,13 @@ spring.datasource.hikari.max-lifetime=120000
 spring.datasource.hikari.connection-timeout=30000
 spring.datasource.hikari.connection-test-query=SELECT 1
 
-##=====================swagger=======================##
+# swagger + knif4j
 swagger.enable=true
 knife4j.enable=true
 #配置此属性为true后,所有资源都会屏蔽输出.
 knife4j.production=false
 knife4j.basic.enable=false
-## Basic认证用户名
+## Basic认证用户名和密码
 knife4j.basic.username=admin
-## Basic认证密码
 knife4j.basic.password=123456
 swagger.scan.base.package="{{ basePackage }}.biz"
