@@ -9,18 +9,12 @@ install_reqs = [req.strip() for req in open(abspath(join(dirname(__file__), 'req
 with open("README.md", 'r', encoding="utf-8") as f:
     long_description = f.read()
 
-# distribution:
-# pip install wheel twine setuptools
-# python setup.py sdist bdist_wheel
-# twine upload dist/*
-
-
 setup(
     name="builder",
     version="0.0.1",
     author="Xiang Zheng",
     author_email="zxyful@gmail.com",
-    description="One API, More Database.",
+    description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license="MIT",
