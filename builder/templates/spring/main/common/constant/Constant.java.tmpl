@@ -16,7 +16,7 @@ public class Constant {
     }
 
     public static final class Jwt {
-        public static final String SECRET = "{{ random_password(43, punctuation=True) }}";
+        public static final String SECRET = "{{ passphrase(43, punctuation=True) }}";
     }
 
 }

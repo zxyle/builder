@@ -21,7 +21,7 @@ def underscore(value):
     return CAMELCASE_INVALID_CHARS.sub('_', value)
 
 
-def random_password(length=32, punctuation=False, digits=True):
+def passphrase(length=32, punctuation=False, digits=True):
     characters = string.ascii_letters
     if digits:
         characters += string.digits
@@ -32,4 +32,3 @@ def random_password(length=32, punctuation=False, digits=True):
 
     password = ''.join(random.sample(characters, length))
     return password
-

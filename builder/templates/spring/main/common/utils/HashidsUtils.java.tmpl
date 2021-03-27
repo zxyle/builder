@@ -7,7 +7,7 @@ import org.hashids.Hashids;
  */
 public class HashidsUtils {
 
-    public static final String salt = "{{ random_password(16) }}";
+    public static final String salt = "{{ passphrase(16) }}";
 
     public static final Hashids hashids = new Hashids(salt, 12);
 
