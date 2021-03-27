@@ -21,10 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse list(Integer pageNum, Integer pageSize) {
-        ApiResponse response = new ApiResponse();
+        ApiResponse response;
         Page<User> page = new Page<>(pageNum, pageSize);
         Page<User> data = userMapper.selectPage(page, null);
-        response.setData(data);
 
         response = new ApiResponse(
                 Constant.Response.SUCCESS_CODE,
@@ -43,6 +42,5 @@ public class UserServiceImpl implements UserService {
                 true);
         return response;
     }
-
 
 }

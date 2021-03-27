@@ -80,6 +80,7 @@ dependencies = [
     Dependency("org.apache.commons", "commons-pool2"),
     Dependency("org.apache.commons", "commons-collections4", version="4.4"),
     Dependency("com.auth0", "java-jwt", version="3.4.0"),
+    Dependency("org.hashids", "hashids", version="1.0.3"),
 ]
 
 properties = [

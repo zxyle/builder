@@ -2,7 +2,7 @@ import os
 
 from jinja2 import Environment, FileSystemLoader
 
-from builder.cli.filters import string_camelcase, sanitize, underscore
+from builder.cli.filters import string_camelcase, sanitize, underscore, random_password
 from builder.cli.git import git_init
 from builder.cli.pom import properties, dependencies, Property
 from builder.cli.utils import copytree
@@ -33,6 +33,7 @@ def load_temps(dst):
     # 自定义过滤器
     env.filters['camelcase'] = string_camelcase
     env.filters['sanitize'] = sanitize
+    env.globals['random_password'] = random_password
 
     return [env.get_template(t) for t in env.list_templates(extensions)]
 

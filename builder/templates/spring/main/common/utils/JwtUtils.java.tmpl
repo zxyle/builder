@@ -13,7 +13,7 @@ import java.util.Map;
 public class JwtUtils {
 
     // 密钥
-    private static final String SECRET_KEY = "OpaijJm2#lTQr0B&J@oELugJ5m7SbM^5";
+    private static final String SECRET_KEY = "{{ random_password(32, punctuation=True) }}";
 
     /**
      * 生成token

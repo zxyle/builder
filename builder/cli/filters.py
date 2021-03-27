@@ -27,7 +27,8 @@ def random_password(length=32, punctuation=False, digits=True):
         characters += string.digits
 
     if punctuation:
-        characters += string.punctuation
+        punctuations = string.punctuation.replace('"', "").replace('\\', "")
+        characters += punctuations
 
     password = ''.join(random.sample(characters, length))
     return password
