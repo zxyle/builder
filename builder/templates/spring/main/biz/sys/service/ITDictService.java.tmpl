@@ -1,7 +1,7 @@
 package {{ basePackage }}.biz.sys.service;
 
 import {{ basePackage }}.biz.sys.entity.TDict;
-import {{ basePackage }}.biz.sys.model.DictVO;
+import {{ basePackage }}.biz.sys.request.DictRequest;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITDictService extends IService<TDict> {
 
-    IPage<TDict> getPageList(DictVO dictVO);
+    IPage<TDict> getPageList(DictRequest request);
 }

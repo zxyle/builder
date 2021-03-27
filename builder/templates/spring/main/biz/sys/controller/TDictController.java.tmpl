@@ -2,7 +2,7 @@ package {{ basePackage }}.biz.sys.controller;
 
 
 import {{ basePackage }}.biz.sys.entity.TDict;
-import {{ basePackage }}.biz.sys.model.DictVO;
+import {{ basePackage }}.biz.sys.request.DictRequest;
 import {{ basePackage }}.biz.sys.service.ITDictService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -45,9 +45,9 @@ public class TDictController {
     @ApiOperation(value = "列表分页查询", notes = "数据源列表", produces = "application/json")
     @ApiImplicitParam(name = "uuid", value = "测试字段", paramType = "query", required = true, dataType = "string")
     @GetMapping("/pages")
-    public ResponseEntity<Object> list(DictVO dictVO) {
+    public ResponseEntity<Object> list(DictRequest request) {
 
-        IPage<TDict> dictIPage = dictService.getPageList(dictVO);
+        IPage<TDict> dictIPage = dictService.getPageList(request);
 
         return ResponseEntity.ok(dictIPage);
     }

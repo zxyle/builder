@@ -2,7 +2,7 @@ package {{ basePackage }}.biz.sys.service.impl;
 
 import {{ basePackage }}.biz.sys.entity.TDict;
 import {{ basePackage }}.biz.sys.mapper.TDictMapper;
-import {{ basePackage }}.biz.sys.model.DictVO;
+import {{ basePackage }}.biz.sys.request.DictRequest;
 import {{ basePackage }}.biz.sys.service.ITDictService;
 import {{ basePackage }}.common.utils.StringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,11 +18,11 @@ import org.springframework.stereotype.Service;
 public class TDictServiceImpl extends ServiceImpl<TDictMapper, TDict> implements ITDictService {
 
     @Override
-    public IPage<TDict> getPageList(DictVO dictVO) {
-        Page<TDict> page = new Page<>(dictVO.getCurPage(), dictVO.getPageSize());
+    public IPage<TDict> getPageList(DictRequest request) {
+        Page<TDict> page = new Page<>(request.getPageNum(), request.getPageSize());
         QueryWrapper<TDict> queryWrapper = new QueryWrapper<>();
-        if (StringUtil.isNotEmpty(dictVO.getId())) {
-            queryWrapper.eq("id", dictVO.getId());
+        if (StringUtil.isNotEmpty(request.getId())) {
+            queryWrapper.eq("id", request.getId());
         }
         queryWrapper.orderByDesc("id");
 
