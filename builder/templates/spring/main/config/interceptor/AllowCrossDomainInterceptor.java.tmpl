@@ -17,8 +17,12 @@ import java.util.Arrays;
 @Component
 public class AllowCrossDomainInterceptor implements HandlerInterceptor {
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public AllowCrossDomainInterceptor(Environment env) {
+        this.env = env;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {

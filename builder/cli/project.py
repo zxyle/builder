@@ -150,6 +150,7 @@ class SpringProject(Base):
             copytree(_dir, f"{target_dir}/src/{p}/java/{group_path}/{sanitize(artifact)}")
 
     def run(self, dst):
+        print("开始创建spring boot项目.")
         self.input_prompt()
         group = self.metadata.get("group")
         artifact = self.metadata.get("artifact")
@@ -170,8 +171,6 @@ class SpringProject(Base):
         })
 
         self.empty_files.extend([
-            "docs/开发手册.md",
-            "docs/部署手册.md",
             "docs/代码规范.md",
         ])
 

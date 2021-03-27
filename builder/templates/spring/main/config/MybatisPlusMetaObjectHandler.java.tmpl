@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Component
-public class MyMetaObjectHandler implements MetaObjectHandler {
+public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
-    // 插入时填充策略
+    // mybatis plus 插入时填充策略
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill");
@@ -19,7 +19,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
     }
 
-    // 更新时填充策略
+    // mybatis plus 更新时填充策略
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("start update fill");

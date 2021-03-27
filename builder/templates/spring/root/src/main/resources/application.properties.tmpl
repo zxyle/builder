@@ -1,17 +1,16 @@
-
+# Core Properties
 spring.application.name={{ artifact }}
 spring.profiles.active=dev
+logging.config=classpath:logback-spring.xml
+logging.level.{{ basePackage }}.biz=debug
 
+# Server Properties
 server.port=8081
 server.max-http-header-size=102400000
 server.http2.enabled=true
 
-# 日志
-logging.level.{{ basePackage }}.biz=debug
-logging.config=classpath:logback-spring.xml
-
 {%- if 'mail' in libs %}
-# 邮件发送端配置(qq邮箱)
+# Mail Properties
 spring.mail.host=smtp.qq.com
 spring.mail.port=465
 spring.mail.username=210797402@qq.com
@@ -19,7 +18,7 @@ spring.mail.password=knhfyhasrxokbjci
 spring.mail.properties.mail.smtp.ssl.enable=true
 {%- endif %}
 
-# template
+# Templating Properties
 spring.freemarker.cache=false
 spring.freemarker.check-template-location=true
 spring.freemarker.content-type=text/html; charset=utf-8
@@ -31,12 +30,14 @@ mybatis-plus.mapper-locations=classpath*:/mapper/**/*.xml
 mybatis-plus.global-config.banner=false
 mybatis-plus.global-config.db-config.update-strategy=not_null
 mybatis-plus.configuration.map-underscore-to-camel-case=true
-# 逻辑删除(1-删除 0-未删除)
+# 逻辑删除(1-已删除 0-未删除)
 mybatis-plus.global-config.db-config.logic-delete-value=1
 mybatis-plus.global-config.db-config.logic-not-delete-value=0
 mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
 # 枚举包扫描
 mybatis-plus.type-enums-package={{ basePackage }}.common.enums
 
-# json
+# Json Properties
 spring.jackson.default-property-inclusion=non_null
+spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+spring.jackson.time-zone=GMT+8

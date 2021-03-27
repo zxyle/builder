@@ -69,10 +69,14 @@ dependencies = [
     # Dependency("io.springfox", "springfox-swagger-ui", version="2.9.2"),
     Dependency("com.github.xiaoymin", "knife4j-spring-boot-starter", version="3.0.2"),
 
-    Dependency("com.google.code.gson", "gson"),
-    Dependency("com.alibaba", "fastjson", version="1.2.74"),
+    # Dependency("com.google.code.gson", "gson"),
+    # Dependency("com.alibaba", "fastjson", version="1.2.74"),
     Dependency("cn.hutool", "hutool-all", version="5.6.1"),
     Dependency("p6spy", "p6spy", version="3.9.1"),
+    Dependency("org.apache.commons", "commons-lang3"),
+    Dependency("commons-io", "commons-io", version="2.8.0"),
+    Dependency("org.apache.commons", "commons-pool2"),
+    Dependency("org.apache.commons", "commons-collections4", version="4.4"),
 ]
 
 properties = [
