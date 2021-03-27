@@ -1,0 +1,43 @@
+package {{ basePackage }}.base.request;
+
+public class BaseRequest {
+
+    /**
+     * 时间戳
+     */
+    private String timestamp;
+
+    /**
+     * 签名
+     */
+    private String sign;
+
+    /**
+     * Number used once
+     */
+    private String nonce;
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
+    }
+}

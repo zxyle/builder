@@ -1,37 +1,40 @@
 package {{ basePackage }}.biz.sample.controller;
 
+import {{ basePackage }}.base.request.PageRequest;
+import {{ basePackage }}.base.response.ApiResponse;
 import {{ basePackage }}.biz.sample.entity.User;
-import {{ basePackage }}.biz.sample.mapper.UserMapper;
+import {{ basePackage }}.biz.sample.service.UserService;
+import {{ basePackage }}.common.utils.PageRequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserMapper userMapper;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<Object> list() {
-        List<User> users = userMapper.selectList(null);
-        return ResponseEntity.ok(users);
+    @PostMapping("/list")
+    public ResponseEntity<Object> list(@RequestBody PageRequest request) {
+        Integer pageNum = PageRequestUtils.checkPageNum(request.getPageNum());
+        Integer pageSize = PageRequestUtils.checkPageSize(request.getPageSize());
+
+        ApiResponse response = userService.list(pageNum, pageSize);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody User user) {
-        int i = userMapper.insert(user);
-        return ResponseEntity.ok(user);
+        ApiResponse response = userService.save(user);
+        return ResponseEntity.ok(response);
     }
 }

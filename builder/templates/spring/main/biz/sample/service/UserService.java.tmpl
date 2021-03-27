@@ -1,0 +1,12 @@
+package {{ basePackage }}.biz.sample.service;
+
+import {{ basePackage }}.base.response.ApiResponse;
+import {{ basePackage }}.biz.sample.entity.User;
+
+public interface UserService {
+
+    ApiResponse list(Integer pageNum, Integer pageSize);
+
+    ApiResponse save(User user);
+
+}
