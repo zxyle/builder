@@ -16,12 +16,12 @@ import java.io.IOException;
  * 序列化器和反序列化器
  */
 @JsonComponent   //此注释会自动将 Serialize和Deserializer注册到jackson之中。
-public class HashidsJackSon {
+public class HashidsCombinedSerializer {
     public static class Serialize extends JsonSerializer<Long> {
         @Override
         public void serialize(Long ids, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            String s = HashidsUtils.encode(ids);
-            jsonGenerator.writeString(s);
+            String hash = HashidsUtils.encode(ids);
+            jsonGenerator.writeString(hash);
         }
     }
 

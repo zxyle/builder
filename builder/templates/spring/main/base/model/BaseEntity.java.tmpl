@@ -1,6 +1,6 @@
 package {{ basePackage }}.base.model;
 
-import {{ basePackage }}.common.utils.HashidsJackSon;
+import {{ basePackage }}.common.utils.HashidsCombinedSerializer;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -28,8 +28,8 @@ public class BaseEntity implements Serializable {
      * 数据表主键id
      */
     @TableId(value = "id", type = IdType.AUTO)
-    @JsonSerialize(using = HashidsJackSon.Serialize.class)
-    @JsonDeserialize(using = HashidsJackSon.Deserialize.class)
+    @JsonSerialize(using = HashidsCombinedSerializer.Serialize.class)
+    @JsonDeserialize(using = HashidsCombinedSerializer.Deserialize.class)
     private Long id;
 
     /**
