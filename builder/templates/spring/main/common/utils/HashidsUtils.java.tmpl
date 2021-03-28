@@ -18,6 +18,10 @@ public class HashidsUtils {
 
     public static Long decode(String hash) {
         long[] key = hashids.decode(hash);
+        // Parsing error
+        if (key.length <= 0) {
+            return null;
+        }
         return key[0];
     }
 
