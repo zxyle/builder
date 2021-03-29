@@ -3,15 +3,19 @@
 
 function install() {
     rm -rf build/ builder.egg-info/ dist/
-    python3 setup.py sdist bdist_wheel
+    package
     pip uninstall -y builder
     pip install dist/builder-0.0.1-py3-none-any.whl
+}
+
+function package() {
+    python3 setup.py sdist bdist_wheel
 }
 
 
 function publish() {
    pip install -U wheel twine setuptools
-   python setup.py sdist bdist_wheel
+   package
    twine upload dist/*
 }
 
@@ -29,6 +33,9 @@ function test() {
 case "$1" in
   "install")
     install
+    ;;
+  "package")
+    package
     ;;
   "publish")
     publish
