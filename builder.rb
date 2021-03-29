@@ -23,9 +23,9 @@ class Builder < Formula
 
   depends_on "python@3.9"
 
-  resource "Jinja" do
-    url "https://files.pythonhosted.org/packages/df/50/70f41c599cf0ace6c554b07108916513c70d0e950b0abb18c27a865df7a2/Jinja-1.2.tar.gz"
-    sha256 "36252f3d0356008a31a537a31cfba189f7b5898b8e2da454f72ea5f987db8b31"
+  resource "Jinja2" do
+    url "https://files.pythonhosted.org/packages/4f/e7/65300e6b32e69768ded990494809106f87da1d436418d5f1367ed3966fd7/Jinja2-2.11.3.tar.gz"
+    sha256 "a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"
   end
 
   resource "requests" do
