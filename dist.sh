@@ -2,7 +2,7 @@
 
 
 function install() {
-    rm -rf build/ builder.egg-info/ dist/
+    clean
     package
     pip uninstall -y builder
     pip install dist/builder-0.0.1-py3-none-any.whl
@@ -10,6 +10,10 @@ function install() {
 
 function package() {
     python3 setup.py sdist bdist_wheel
+}
+
+function clean() {
+    rm -rf build/ builder.egg-info/ dist/
 }
 
 
@@ -20,7 +24,7 @@ function publish() {
 }
 
 function usage() {
-    echo "Usage: sh dist.sh [install|publish]"
+    echo "Usage: sh dist.sh [clean|package|install|publish]"
     exit 1
 }
 
