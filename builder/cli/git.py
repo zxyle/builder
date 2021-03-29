@@ -6,18 +6,23 @@ from builder import version
 
 
 def git_init(dst):
-    # 检查git命令是否存在
     os.chdir(dst)
-    # git config --global user.email "you@example.com"
-    # git config --global user.name "Your Name"
-    os.system("git init")
-    os.system("git add .")
-    message = f"first commit by builder, version: {version}"
-    os.system(f'git commit -m "{message}"')
+    # 检查git命令是否存在
+    exit_code = os.system("git version")
+    if exit_code == 0:
+        # git config --global user.email "you@example.com"
+        # git config --global user.name "Your Name"
 
-    # TODO add remote and push
+        os.system("git init")
+        os.system("git add .")
+        message = f"first commit by builder, version: {version}"
+        os.system(f'git commit -m "{message}"')
 
-    os.system("git checkout -b develop")
+        # TODO add remote and push
+
+        os.system("git checkout -b develop")
+    else:
+        print("git command not found")
 
 
 def gitflow():
