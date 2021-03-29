@@ -4,7 +4,7 @@ from os.path import abspath, dirname, join
 
 from setuptools import find_packages, setup
 
-from builder import version
+import builder
 
 install_reqs = [req.strip() for req in open(abspath(join(dirname(__file__), 'requirements.txt')))]
 
@@ -13,8 +13,8 @@ with open("README.md", 'r', encoding="utf-8") as f:
 
 setup(
     name="builder",
-    version=version,
-    author="Xiang Zheng",
+    version=builder.__version__,
+    author=builder.__author__,
     author_email="zxyful@gmail.com",
     description="",
     long_description=long_description,
@@ -22,6 +22,14 @@ setup(
     license="MIT",
     url="https://github.com/zxyle/builder",
     packages=find_packages(),
+    # download_url="",
+    # package_data=None,
+    # data_files=None,
+    # keywords=None,
+    # project_urls=None,
+    # py_modules=None,
+    # python_requires=None,
+    # scripts=None,
     include_package_data=True,
     install_requires=install_reqs,
     # tests_require=tests_require,
