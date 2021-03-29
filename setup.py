@@ -4,6 +4,8 @@ from os.path import abspath, dirname, join
 
 from setuptools import find_packages, setup
 
+from builder import version
+
 install_reqs = [req.strip() for req in open(abspath(join(dirname(__file__), 'requirements.txt')))]
 
 with open("README.md", 'r', encoding="utf-8") as f:
@@ -11,7 +13,7 @@ with open("README.md", 'r', encoding="utf-8") as f:
 
 setup(
     name="builder",
-    version="0.0.1",
+    version=version,
     author="Xiang Zheng",
     author_email="zxyful@gmail.com",
     description="",

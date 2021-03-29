@@ -2,6 +2,7 @@ import os
 
 
 # TODO ignore
+from builder import version
 
 
 def git_init(dst):
@@ -11,7 +12,8 @@ def git_init(dst):
     # git config --global user.name "Your Name"
     os.system("git init")
     os.system("git add .")
-    os.system('git commit -m "first commit"')
+    message = f"first commit by builder, version: {version}"
+    os.system(f'git commit -m "{message}"')
 
     # TODO add remote and push
 
