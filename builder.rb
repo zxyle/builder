@@ -35,8 +35,8 @@ class Builder < Formula
 
   def install
     virtualenv_install_with_resources
-    # bash_completion.install "contrib/completion/bash/docker-compose"
-    # zsh_completion.install "contrib/completion/zsh/_docker-compose"
+    bash_completion.install "contrib/completion/bash/builder"
+    zsh_completion.install "contrib/completion/zsh/_builder"
   end
 
   test do
