@@ -10,6 +10,12 @@ def git_init(dst):
     # 检查git命令是否存在
     exit_code = os.system("git version")
     if exit_code == 0:
+        # git config --global --get user.name
+        # git config --global --get user.email
+
+        # git config --local user.name ""
+        # git config --local user.email ""
+
         # git config --global user.email "you@example.com"
         # git config --global user.name "Your Name"
 
