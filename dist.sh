@@ -35,6 +35,9 @@ function test() {
 
 #根据输入参数，选择执行对应方法，不输入则执行使用说明
 case "$1" in
+  "clean")
+    clean
+    ;;
   "install")
     install
     ;;
