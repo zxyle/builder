@@ -1,1 +1,2 @@
+recursive-include contrib/completion *
 graft builder/templates/
