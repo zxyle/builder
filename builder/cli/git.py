@@ -2,7 +2,7 @@ import os
 
 
 # TODO ignore
-from builder import version
+from builder import __version__
 
 
 def git_init(dst):
@@ -21,7 +21,7 @@ def git_init(dst):
 
         os.system("git init")
         os.system("git add .")
-        message = f"first commit by builder, version: {version}"
+        message = f"first commit by builder, version: {__version__}"
         os.system(f'git commit -m "{message}"')
 
         # TODO add remote and push
