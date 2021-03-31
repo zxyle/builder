@@ -1,11 +1,17 @@
 
-# 脚手架项目生成
+# Builder
+**Builder** is used to quickly create spring or python project command line tools.
 
-## 介绍
+## Installing
+Builder is available on Homebrew:
+```bash
+brew install zxyle/taps/builder
+```
 
-## 项目名称
-- bootstrap
-- builder
+## Quick Start
+[![asciicast](https://asciinema.org/a/oGD2OyOEiIkImUSFBfcUHplOn.svg)](https://asciinema.org/a/oGD2OyOEiIkImUSFBfcUHplOn)
 
-## 支持项目
-spring python golang
+## Features
+
+## License
+MIT
