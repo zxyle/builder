@@ -2,15 +2,15 @@
 
 
 function install() {
-    clean
     package
     pip uninstall -y builder
     pip install dist/builder-0.0.1-py3-none-any.whl
 }
 
 function package() {
+  clean
   pip install -U wheel twine setuptools
-    python3 setup.py sdist bdist_wheel
+  python3 setup.py sdist bdist_wheel
 }
 
 function clean() {
