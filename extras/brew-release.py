@@ -113,11 +113,10 @@ def upload_oss():
     bucket_name = env.get("bucket_name")
 
     bucket = oss2.Bucket(oss2.Auth(access_key_id, access_key_secret), endpoint, bucket_name)
-    object_name = f'{filename}{extension}'
+    object_name = f'tarballs/{filename}{extension}'
     file = f'./{filename}{extension}'
     with open(file, 'rb') as f:
-        pass
-        # bucket.put_object(object_name, f)
+        bucket.put_object(object_name, f)
 
     url = f"https://{bucket_name}.{endpoint}/{object_name}"
     print(f"  url \"{url}\"")
