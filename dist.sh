@@ -9,6 +9,7 @@ function install() {
 }
 
 function package() {
+  pip install -U wheel twine setuptools
     python3 setup.py sdist bdist_wheel
 }
 
@@ -18,7 +19,6 @@ function clean() {
 
 
 function publish() {
-   pip install -U wheel twine setuptools
    package
    twine upload dist/*
 }
