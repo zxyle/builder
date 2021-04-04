@@ -11,23 +11,23 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- *  字符串操作工具类，扩展自 hutool.cn
+ * 字符串操作工具类，扩展自 hutool.cn
  */
 public class StringUtil extends StrUtil {
 
     /**
-     *  格式化字符串（替换符为%s）
+     * 格式化字符串（替换符为%s）
      */
     public static String formatIfArgs(String format, Object... args) {
         if (StrUtil.isEmpty(format)) {
             return format;
         }
 
-        return (args == null || args.length == 0)  ? String.format(format.replaceAll("%([^n])", "%%$1")) : String.format(format, args);
+        return (args == null || args.length == 0) ? String.format(format.replaceAll("%([^n])", "%%$1")) : String.format(format, args);
     }
 
     /**
-     *  格式化字符串(替换符自己指定)
+     * 格式化字符串(替换符自己指定)
      */
     public static String formatIfArgs(String format, String replaceOperator, Object... args) {
         if (isEmpty(format) || isEmpty(replaceOperator)) {
@@ -55,7 +55,7 @@ public class StringUtil extends StrUtil {
                 StringBuilder sb = new StringBuilder(capacity);
                 int pos = 0;
 
-                for(int patLen = oldPattern.length(); index >= 0; index = inString.indexOf(oldPattern, pos)) {
+                for (int patLen = oldPattern.length(); index >= 0; index = inString.indexOf(oldPattern, pos)) {
                     sb.append(inString.substring(pos, index));
                     sb.append(newPattern);
                     pos = index + patLen;
@@ -71,6 +71,7 @@ public class StringUtil extends StrUtil {
 
     /**
      * 格式化 2020-07-08T02:33:49.103766524Z
+     *
      * @param oldDate
      * @return
      */
@@ -80,7 +81,7 @@ public class StringUtil extends StrUtil {
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             Date date = df.parse(oldDate);
-            SimpleDateFormat df1 = new SimpleDateFormat ("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
             date1 = df1.parse(date.toString());
             df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         } catch (ParseException e) {
@@ -95,20 +96,20 @@ public class StringUtil extends StrUtil {
      * * 生成固定长度随机中文
      * * @param n 中文个数
      * * @return 中文串 	 */
-    public static String getRandomChineseString(int n){
+    public static String getRandomChineseString(int n) {
         String zh_cn = "";
-        String str ="";
+        String str = "";
 
         // Unicode中汉字所占区域\u4e00-\u9fa5,将4e00和9fa5转为10进制
         int start = Integer.parseInt("4e00", 16);
         int end = Integer.parseInt("9fa5", 16);
 
-        for(int ic=0;ic<n;ic++){
+        for (int ic = 0; ic < n; ic++) {
             // 随机值
-            int code =(new Random()).nextInt(end - start + 1) + start;
+            int code = (new Random()).nextInt(end - start + 1) + start;
             // 转字符
-            str = new String(new char[] { (char) code });
-            zh_cn=zh_cn+str;
+            str = new String(new char[]{(char) code});
+            zh_cn = zh_cn + str;
         }
         return zh_cn;
     }

@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(value = {Exception.class, NullPointerException.class, HttpMessageNotReadableException.class})//这里可以写多个异常
+    @ExceptionHandler(value = {Exception.class, NullPointerException.class, HttpMessageNotReadableException.class})
     public ResponseEntity<String> exceptionHandler(HttpServletRequest request, Exception e, HttpServletResponse response) {
         logger.error(request.getServletPath(), response.getStatus(), e.getMessage());
         int status = response.getStatus();
