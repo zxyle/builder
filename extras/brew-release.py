@@ -88,8 +88,8 @@ filename = f"{__project__}-{__version__}"
 extension = ".tar.gz"
 
 
-def package():
-    cmd = f"tar -zcvf  {filename}{extension}"
+def compressing():
+    cmd = f"tar -zcf  {filename}{extension}"
     exclude_pattern = [
         f'{__project__}/venv',
         f'{__project__}/.git',
@@ -104,6 +104,7 @@ def package():
 
     cmd += f" {__project__}"
     exit_code = os.system(cmd)
+    assert exit_code == 0
 
 
 def upload_oss():
@@ -148,7 +149,7 @@ def build_bottle():
 
 
 if __name__ == '__main__':
-    package()
+    compressing()
     print_metadata()
     upload_oss()
     main()
