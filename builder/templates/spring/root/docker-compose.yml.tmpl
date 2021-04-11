@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      # create a database
+      MYSQL_DATABASE: {{ dbName }}
+      # create a user
+      MYSQL_USER: zheng
+      MYSQL_PASSWORD: VJtgG2AsIOw4Yklg
+
+  redis:
+    image: redis:6
+    command: --appendonly yes
+    ports:
+      - 6379:6379

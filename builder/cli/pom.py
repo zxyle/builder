@@ -58,6 +58,7 @@ dependencies = [
     Dependency("org.springframework.boot", "spring-boot-starter-jdbc"),
     Dependency("org.springframework.boot", "spring-boot-starter-test", scope="test"),
     # Dependency("org.springframework.boot", "spring-boot-starter-security"),
+    Dependency("org.springframework.boot", "spring-boot-starter-data-redis"),
     Dependency("org.springframework.boot", "spring-boot-devtools", scope="runtime", optional="true"),
     Dependency("org.springframework.boot", "spring-boot-configuration-processor", optional="true"),
     Dependency("mysql", "mysql-connector-java", scope="runtime"),
