@@ -6,6 +6,7 @@ from builder.cli.filters import string_camelcase, sanitize, underscore, passphra
 from builder.cli.git import git_init
 from builder.cli.pom import properties, dependencies, Property
 from builder.cli.utils import copytree
+from builder.common.ignore import build_up_ignore
 from builder.common.license import choose
 from builder.golang.utils import find_go_version
 
@@ -109,6 +110,10 @@ class Base:
         license_content = choose(author, license_kind)
 
         self.write("LICENSE", license_content)
+
+        ignore_content = build_up_ignore(self.temp_name)
+        self.write(".gitignore", ignore_content)
+
         git_init(self.output_dir)
 
     def write(self, path, content):
