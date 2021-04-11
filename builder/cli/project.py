@@ -6,6 +6,7 @@ from builder.cli.filters import string_camelcase, sanitize, underscore, passphra
 from builder.cli.git import git_init
 from builder.cli.pom import properties, dependencies, Property
 from builder.cli.utils import copytree
+from builder.golang.utils import find_go_version
 
 
 class Template:
@@ -232,12 +233,13 @@ class FlaskProject(Base):
 class GolangProject(Base):
     temp_name = "golang"
     metadata = {
-        "project_name": "awesome",
+        "projectName": "awesome",
+        "goVersion": find_go_version()
     }
 
     def run(self, dst):
         self.input_prompt()
-        project_name = self.metadata.get("project_name")
+        project_name = self.metadata.get("projectName")
         target_dir = self.copy_template(self.temp_name, dst, project_name)
         self.render(target_dir, self.metadata)
         self.docker_support()
@@ -245,5 +247,6 @@ class GolangProject(Base):
             "LICENSE",
             "docs/guide.md",
             "docs/TODO.md",
+            "go.sum",
         ])
         self.after()
