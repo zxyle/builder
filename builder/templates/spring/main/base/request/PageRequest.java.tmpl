@@ -1,17 +1,17 @@
 package {{ basePackage }}.base.request;
 
 /**
- * 分页请求
+ * pagination request object
  */
 public class PageRequest extends BaseRequest {
 
     /**
-     * 当前页
+     * number of the current page
      */
     private Integer pageNum;
 
     /**
-     * 每页数目
+     * size of the pages
      */
     private Integer pageSize;
 
@@ -19,8 +19,8 @@ public class PageRequest extends BaseRequest {
         return pageNum;
     }
 
-    public void setPageNum(Integer currentPage) {
-        this.pageNum = currentPage;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
     public Integer getPageSize() {

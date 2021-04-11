@@ -3,12 +3,12 @@ package {{ basePackage }}.base.request;
 public class BaseRequest {
 
     /**
-     * 时间戳
+     * timestamp
      */
-    private String timestamp;
+    private String ts;
 
     /**
-     * 签名
+     * signature
      */
     private String sign;
 
@@ -17,12 +17,12 @@ public class BaseRequest {
      */
     private String nonce;
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getTs() {
+        return ts;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTs(String ts) {
+        this.ts = ts;
     }
 
     public String getSign() {
