@@ -6,7 +6,10 @@ from builder.cli.filters import string_camelcase, sanitize, underscore, passphra
 from builder.cli.git import git_init
 from builder.cli.pom import properties, dependencies, Property
 from builder.cli.utils import copytree
+from builder.common.license import choose
 from builder.golang.utils import find_go_version
+
+DEFAULT_LICENSE = "mit"
 
 
 class Template:
@@ -101,7 +104,16 @@ class Base:
 
     def after(self):
         self.touch_empty_files()
+        author = self.metadata.get("author")
+        license_kind = self.metadata.get("license")
+        license_content = choose(author, license_kind)
+
+        self.write("LICENSE", license_content)
         git_init(self.output_dir)
+
+    def write(self, path, content):
+        with open(f"{self.output_dir}/{path}", "w") as f:
+            f.write(content)
 
     def docker_support(self):
         self.empty_files.extend([
@@ -145,6 +157,8 @@ class SpringProject(Base):
         "packaging": "jar",
         "javaVersion": "1.8",
         "bootVersion": "2.4.4",
+        "author": "",
+        "license": "mit",
     }
 
     def copy_other(self, dst, group_path, artifact):
@@ -203,6 +217,8 @@ class PythonProject(Base):
     temp_name = "python"
     metadata = {
         "project_name": "awesome",
+        "author": "",
+        "license": "mit",
     }
 
     def run(self, dst):
@@ -215,7 +231,6 @@ class PythonProject(Base):
             "requirements.txt",
             "main.py",
             "setup.cfg",
-            "LICENSE",
             "tests/__init__.py",
             f"{project_name}/__init__.py",
             "scripts/__init__.py",
@@ -234,7 +249,9 @@ class GolangProject(Base):
     temp_name = "golang"
     metadata = {
         "projectName": "awesome",
-        "goVersion": find_go_version()
+        "goVersion": find_go_version(),
+        "author": "",
+        "license": "mit",
     }
 
     def run(self, dst):
@@ -244,7 +261,6 @@ class GolangProject(Base):
         self.render(target_dir, self.metadata)
         self.docker_support()
         self.empty_files.extend([
-            "LICENSE",
             "docs/guide.md",
             "docs/TODO.md",
             "go.sum",
