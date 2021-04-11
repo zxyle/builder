@@ -230,4 +230,20 @@ class FlaskProject(Base):
 
 
 class GolangProject(Base):
-    pass
+    temp_name = "golang"
+    metadata = {
+        "project_name": "awesome",
+    }
+
+    def run(self, dst):
+        self.input_prompt()
+        project_name = self.metadata.get("project_name")
+        target_dir = self.copy_template(self.temp_name, dst, project_name)
+        self.render(target_dir, self.metadata)
+        self.docker_support()
+        self.empty_files.extend([
+            "LICENSE",
+            "docs/guide.md",
+            "docs/TODO.md",
+        ])
+        self.after()

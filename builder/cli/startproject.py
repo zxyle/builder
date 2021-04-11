@@ -31,4 +31,5 @@ def create(temp_name, dst):
 if __name__ == '__main__':
     # create("python", "/Users/xiangzheng/developer/projects/personal/")
     create("spring", "/Users/xiangzheng/developer/projects/personal/")
+    # create("golang", "/Users/xiangzheng/developer/projects/personal/")
     # create("python", "/Users/xiangzheng/developer/projects/personal/")
