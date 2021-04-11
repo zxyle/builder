@@ -4,6 +4,7 @@ import {{ basePackage }}.biz.sys.entity.TDict;
 import {{ basePackage }}.biz.sys.mapper.TDictMapper;
 import {{ basePackage }}.biz.sys.request.DictRequest;
 import {{ basePackage }}.biz.sys.service.ITDictService;
+import {{ basePackage }}.common.utils.PageRequestUtils;
 import {{ basePackage }}.common.utils.StringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,7 +20,10 @@ public class TDictServiceImpl extends ServiceImpl<TDictMapper, TDict> implements
 
     @Override
     public IPage<TDict> getPageList(DictRequest request) {
-        Page<TDict> page = new Page<>(request.getPageNum(), request.getPageSize());
+        Integer pageNum = PageRequestUtils.checkPageNum(request.getPageNum());
+        Integer pageSize = PageRequestUtils.checkPageSize(request.getPageSize());
+
+        Page<TDict> page = new Page<>(pageNum, pageSize);
         QueryWrapper<TDict> queryWrapper = new QueryWrapper<>();
         if (StringUtil.isNotEmpty(request.getId())) {
             queryWrapper.eq("id", request.getId());
