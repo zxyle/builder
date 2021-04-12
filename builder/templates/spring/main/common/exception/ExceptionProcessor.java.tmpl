@@ -1,0 +1,23 @@
+package {{ basePackage }}.common.exception;
+
+
+import {{ basePackage }}.base.response.ApiResponse;
+import {{ basePackage }}.common.constant.Constant;
+import org.slf4j.Logger;
+
+public class ExceptionProcessor {
+    public static void catchException(final Logger log, Exception e, ApiResponse response) {
+        if (e instanceof BlException) {
+            BlException blException = (BlException) e;
+            log.info("-> CODE:[" + blException.getCode() + "] MESSAGE:" + e.getMessage());
+            response.setCode(blException.getCode());
+            response.setMessage(blException.getMessage());
+            response.setSuccess(false);
+        } else {
+            log.error("EXCEPTION OCCURS IN SERVICE METHOD", e);
+            response.setCode(Constant.Response.ERROR_CODE);
+            response.setMessage(Constant.Response.ERROR_EXCEPTION);
+            response.setSuccess(false);
+        }
+    }
+}

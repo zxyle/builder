@@ -1,0 +1,27 @@
+package {{ basePackage }}.common.enums;
+
+
+import {{ basePackage }}.common.constant.Constant;
+
+/**
+ * 网络异常枚举
+ */
+public enum ErrorNetWorkEnum {
+    MONITOR_ERROR_15001("接口异常，无法连接", Constant.ErrorCode.Mould.MONITOR + Constant.ErrorCode.Rank.NETWORK + "15001");
+
+    private final String message;
+    private final String code;
+
+    ErrorNetWorkEnum(String message, String code) {
+        this.message = message;
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+}
