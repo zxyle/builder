@@ -1,0 +1,14 @@
+{
+  "title": "",
+  "description": "",
+  "language": "zh-hans",
+  "plugins": [
+    "github",
+    "back-to-top-button"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/xxx"
+    }
+  }
+}
