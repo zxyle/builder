@@ -247,7 +247,7 @@ class PythonProject(Base):
 
 
 class FlaskProject(Base):
-    pass
+    temp_name = "flask"
 
 
 class GolangProject(Base):
@@ -270,4 +270,18 @@ class GolangProject(Base):
             "docs/TODO.md",
             "go.sum",
         ])
+        self.after()
+
+
+class GitbookProject(Base):
+    temp_name = "gitbook"
+    metadata = {
+        "projectName": "awesome",
+    }
+
+    def run(self, dst):
+        self.input_prompt()
+        project_name = self.metadata.get("projectName")
+        target_dir = self.copy_template(self.temp_name, dst, project_name)
+        self.render(target_dir, self.metadata)
         self.after()
