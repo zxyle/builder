@@ -9,7 +9,7 @@ brew install zxyle/taps/builder
 ```
 
 ## Quick Start
-[![asciicast](https://asciinema.org/a/oGD2OyOEiIkImUSFBfcUHplOn.svg)](https://asciinema.org/a/oGD2OyOEiIkImUSFBfcUHplOn)
+[![asciicast](https://asciinema.org/a/cQiqVGTyejZWaup3om2oaVWcX.svg)](https://asciinema.org/a/cQiqVGTyejZWaup3om2oaVWcX)
 
 ## Features
 
