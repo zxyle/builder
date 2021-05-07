@@ -113,19 +113,25 @@ class Base:
 
         ignore_content = build_up_ignore(self.temp_name)
         self.write(".gitignore", ignore_content)
-
-        git_init(self.output_dir)
+        if self.show("Do you need to git init this project?"):
+            git_init(self.output_dir)
 
     def write(self, path, content):
         with open(f"{self.output_dir}/{path}", "w") as f:
             f.write(content)
 
     def docker_support(self):
-        self.empty_files.extend([
-            "Dockerfile",
-            "docker-compose.yml",
-            ".dockerignore",
-        ])
+        if self.show("🐳 Do you need docker support?"):
+            self.empty_files.extend([
+                "Dockerfile",
+                "docker-compose.yml",
+                ".dockerignore",
+            ])
+
+    def show(self, prompt):
+        if input(f"{prompt} [Y/N]:").lower() == "y":
+            return True
+        return False
 
     def touch_empty_files(self):
         for file in self.empty_files:
