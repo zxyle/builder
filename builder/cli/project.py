@@ -107,9 +107,9 @@ class Base:
         self.touch_empty_files()
         author = self.metadata.get("author")
         license_kind = self.metadata.get("license")
-        license_content = choose(author, license_kind)
-
-        self.write("LICENSE", license_content)
+        if license_kind:
+            license_content = choose(author, license_kind)
+            self.write("LICENSE", license_content)
 
         ignore_content = build_up_ignore(self.temp_name)
         self.write(".gitignore", ignore_content)
