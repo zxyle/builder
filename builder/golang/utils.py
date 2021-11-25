@@ -1,15 +1,18 @@
+import re
 import os
 
 DEFAULT_GO_VERSION = "1.16"
 
 
 def find_go_version():
-    exit_code = os.system("go version")
-    if exit_code != 0:
-        print(" go is not installed.")
+    cmd = os.popen("go version")
+    pattern = re.compile("\d+\.\d+\.\d+")
+    text = cmd.read()
+    match = pattern.search(text)
+    if match:
+        major, minor, micro = match.group().split(".")
+        version = f"{major}.{minor}"
+        return version
 
     return DEFAULT_GO_VERSION
 
-
-if __name__ == '__main__':
-    find_go_version()
