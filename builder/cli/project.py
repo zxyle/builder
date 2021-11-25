@@ -291,3 +291,17 @@ class GitbookProject(Base):
         target_dir = self.copy_template(self.temp_name, dst, project_name)
         self.render(target_dir, self.metadata)
         self.after()
+
+
+class UmiProject(Base):
+    temp_name = "umi"
+    metadata = {
+        "projectName": "awesome",
+    }
+
+    def run(self, dst):
+        self.input_prompt()
+        project_name = self.metadata.get("projectName")
+        target_dir = self.copy_template(self.temp_name, dst, project_name)
+        self.render(target_dir, self.metadata)
+        self.after()
