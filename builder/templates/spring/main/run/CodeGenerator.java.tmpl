@@ -54,8 +54,13 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
         // gc.setAuthor(AUTHOR);
-        gc.setOpen(false);
+        gc.setOpen(false);    // 是否打开输出目录
         gc.setSwagger2(true); // 实体属性 Swagger2 注解
+        // gc.setEnableCache(true);     // 是否开启mybatis二级缓存
+        // gc.setBaseColumnList(true);  // 设置mybatis baseColumn
+        // gc.setBaseResultMap(true);   // 设置mybatis resultMap// gc.setEnableCache(true);     // 是否开启mybatis二级缓存
+        // gc.setBaseColumnList(true);  // 设置mybatis baseColumn
+        // gc.setBaseResultMap(true);   // 设置mybatis resultMap
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -95,7 +100,7 @@ public class CodeGenerator {
         };
 
         // 如果模板引擎是 freemarker
-        String templatePath = "/templates/mapper.xml.ftl";
+        String templatePath = "templates/mp/mapper.xml.ftl";
         // 如果模板引擎是 velocity
         // String templatePath = "/templates/mapper.xml.vm";
 
@@ -138,7 +143,7 @@ public class CodeGenerator {
         templateConfig.setService("templates/mp/service.java");
         templateConfig.setController("templates/mp/controller.java");
         templateConfig.setServiceImpl("templates/mp/serviceImpl.java");
-        templateConfig.setXml(null);
+        templateConfig.setXml("templates/mp/mapper.java");
         mpg.setTemplate(templateConfig);
 
         // 策略配置
