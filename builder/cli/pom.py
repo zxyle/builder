@@ -1,5 +1,8 @@
+GROUP = "org.springframework.boot"
+
+
 class Base:
-    group_id = "org.springframework.boot"
+    group_id = GROUP
     artifact_id = None
 
     def __init__(self, group_id, artifact_id):
@@ -19,6 +22,9 @@ class Dependency(Base):
     def add_exclude(self, group_id, artifact_id):
         exclusion = Exclusion(group_id, artifact_id)
         self.exclusions.append(exclusion)
+
+    def add_exclusions(self, exclusions):
+        self.exclusions.extend(exclusions)
 
     def __eq__(self, other):
         return self.group_id == other.group_id and \
@@ -47,20 +53,32 @@ class Dependencies:
         pass
 
 
+# spring boot dependency
+web_exclusions = [
+    Exclusion(GROUP, "spring-boot-starter-tomcat"),
+    Exclusion(GROUP, "spring-boot-starter-logging"),
+]
+
+web_stater = Dependency(GROUP, "spring-boot-starter-web")
+web_stater.add_exclusions(web_exclusions)
+
 dependencies = [
-    Dependency("org.springframework.boot", "spring-boot-starter-actuator"),
-    Dependency("org.springframework.boot", "spring-boot-starter-validation"),
-    Dependency("org.springframework.boot", "spring-boot-starter-web"),
-    # Dependency("org.springframework.boot", "spring-boot-starter-mail"),
-    Dependency("org.springframework.boot", "spring-boot-starter-quartz"),
-    Dependency("org.springframework.boot", "spring-boot-starter-cache"),
-    Dependency("org.springframework.boot", "spring-boot-starter-freemarker"),
-    Dependency("org.springframework.boot", "spring-boot-starter-jdbc"),
-    Dependency("org.springframework.boot", "spring-boot-starter-test", scope="test"),
-    # Dependency("org.springframework.boot", "spring-boot-starter-security"),
-    Dependency("org.springframework.boot", "spring-boot-starter-data-redis"),
-    Dependency("org.springframework.boot", "spring-boot-devtools", scope="runtime", optional="true"),
-    Dependency("org.springframework.boot", "spring-boot-configuration-processor", optional="true"),
+    Dependency(GROUP, "spring-boot-starter-actuator"),
+    Dependency(GROUP, "spring-boot-starter-validation"),
+    web_stater,
+    Dependency(GROUP, "spring-boot-starter-undertow"),
+    # Dependency(GROUP, "spring-boot-starter-log4j2"),
+    # Dependency(GROUP, "spring-boot-starter-mail"),
+    # Dependency(GROUP, "spring-boot-starter-quartz"),
+    Dependency(GROUP, "spring-boot-starter-cache"),
+    Dependency(GROUP, "spring-boot-starter-freemarker"),
+    Dependency(GROUP, "spring-boot-starter-jdbc"),
+    Dependency(GROUP, "spring-boot-starter-test", scope="test"),
+    # Dependency(GROUP, "spring-boot-starter-security"),
+    Dependency(GROUP, "spring-boot-starter-data-redis"),
+    Dependency(GROUP, "spring-session-data-redis"),
+    Dependency(GROUP, "spring-boot-devtools", scope="runtime", optional="true"),
+    Dependency(GROUP, "spring-boot-configuration-processor", optional="true"),
     Dependency("mysql", "mysql-connector-java", scope="runtime"),
     Dependency("org.projectlombok", "lombok", optional="true"),
 
