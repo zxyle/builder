@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "lodash-es": "^4.17.21",
     "jsencrypt": "^3.2.1",
     "mockjs": "^1.1.0",
     "react": "17.x",
