@@ -1,16 +1,15 @@
 import os
 
+import inquirer
 from jinja2 import Environment, FileSystemLoader
 
 from builder.cli.filters import string_camelcase, sanitize, underscore, passphrase
 from builder.cli.git import git_init
 from builder.cli.pom import properties, dependencies, Property
-from builder.cli.utils import copytree
+from builder.cli.utils import copytree, get_sys_user
 from builder.common.ignore import build_up_ignore
 from builder.common.license import choose
 from builder.golang.utils import find_go_version
-
-DEFAULT_LICENSE = "mit"
 
 
 class Template:
@@ -79,11 +78,11 @@ def recursive_delete(path):
 
 
 class Base:
-    #
     empty_files = []
     output_dir = ""
     root_dir = ""
     metadata = {}
+    questions = []
 
     # 复制到目标目录
     # 渲染模板
@@ -107,7 +106,7 @@ class Base:
         self.touch_empty_files()
         author = self.metadata.get("author")
         license_kind = self.metadata.get("license")
-        if license_kind:
+        if license_kind and license_kind != "none":
             license_content = choose(author, license_kind)
             self.write("LICENSE", license_content)
 
@@ -129,7 +128,7 @@ class Base:
             ])
 
     def show(self, prompt):
-        if input(f"{prompt} [Y/N]:").lower() == "y":
+        if input(f"{prompt} [Y/N]:").lower() != "n":
             return True
         return False
 
@@ -152,25 +151,43 @@ class Base:
         # keywords
         # author
         # license: (ISC)
-        print("括号里为默认值.")
-        for k, v in self.metadata.items():
-            v = input(f"{k}: ({v}) ", )
-            if v:
-                self.metadata.update({k: v})
+        answers = inquirer.prompt(self.questions)
+        self.metadata.update(answers)
 
 
 class SpringProject(Base):
     temp_name = "spring"
-    metadata = {
-        "group": "com.example",
-        "artifact": "demo",
-        "description": "Demo project for Spring Boot",
-        "packaging": "jar",
-        "javaVersion": "1.8",
-        "bootVersion": "2.4.4",
-        "author": "",
-        "license": "mit",
-    }
+    questions = [
+        inquirer.Text('group', message="Please enter a group", default="com.example"),
+        inquirer.Text('artifact', message="Please enter a artifact", default="demo"),
+        inquirer.Text('description', message="Please enter a description", default="Demo project for Spring Boot"),
+        inquirer.Text('author', message="What's your name", default=get_sys_user()),
+        inquirer.List('packaging',
+                      message="packaging?",
+                      choices=['jar', 'war'],
+                      ),
+        inquirer.List('javaVersion',
+                      message="javaVersion?",
+                      choices=['8', '11', '17'],
+                      ),
+        inquirer.List('bootVersion',
+                      message="bootVersion?",
+                      choices=['2.4.4', '2.6.1', '2.5.7'],
+                      ),
+
+        inquirer.List('license',
+                      message="license?",
+                      choices=['none', 'mit', 'apache'],
+                      ),
+        inquirer.List('Project',
+                      message="project?",
+                      choices=['Maven Project', 'Gradle Project'],
+                      ),
+        inquirer.List('Language',
+                      message="Language?",
+                      choices=['Java', 'Kotlin', 'Groovy'],
+                      ),
+    ]
 
     def copy_other(self, dst, group_path, artifact):
         target_dir = os.path.join(dst, artifact)
@@ -226,11 +243,14 @@ class SpringProject(Base):
 
 class PythonProject(Base):
     temp_name = "python"
-    metadata = {
-        "project_name": "awesome",
-        "author": "",
-        "license": "mit",
-    }
+    questions = [
+        inquirer.Text('project_name', message="Please enter a project_name", default="awesome"),
+        inquirer.Text('author', message="What's your name", default=get_sys_user()),
+        inquirer.List('license',
+                      message="license?",
+                      choices=['none', 'mit', 'apache'],
+                      ),
+    ]
 
     def run(self, dst):
         self.input_prompt()
@@ -258,12 +278,15 @@ class FlaskProject(Base):
 
 class GolangProject(Base):
     temp_name = "golang"
-    metadata = {
-        "projectName": "awesome",
-        "goVersion": find_go_version(),
-        "author": "",
-        "license": "mit",
-    }
+    questions = [
+        inquirer.Text('projectName', message="Please enter a projectName", default="awesome"),
+        inquirer.Text('goVersion', message="Please enter a goVersion", default=find_go_version()),
+        inquirer.Text('author', message="What's your name", default=get_sys_user()),
+        inquirer.List('license',
+                      message="license?",
+                      choices=['none', 'mit', 'apache'],
+                      ),
+    ]
 
     def run(self, dst):
         self.input_prompt()
@@ -284,6 +307,9 @@ class GitbookProject(Base):
     metadata = {
         "projectName": "awesome",
     }
+    questions = [
+        inquirer.Text('projectName', message="Please enter a projectName", default="awesome"),
+    ]
 
     def run(self, dst):
         self.input_prompt()
@@ -295,9 +321,9 @@ class GitbookProject(Base):
 
 class UmiProject(Base):
     temp_name = "umi"
-    metadata = {
-        "projectName": "awesome",
-    }
+    questions = [
+        inquirer.Text('projectName', message="Please enter a projectName", default="awesome"),
+    ]
 
     def run(self, dst):
         self.input_prompt()

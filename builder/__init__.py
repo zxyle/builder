@@ -4,7 +4,7 @@ python_version = sys.version_info
 
 __author__ = "Xiang Zheng"
 __email__ = "zxyful@gmail.com"
-__version__ = "0.0.1"
+__version__ = "0.0.3"
 __project__ = "builder"
 __description__ = "Quickly create batteries included project"
 __homepage__ = "https://github.com/zxyle/builder"

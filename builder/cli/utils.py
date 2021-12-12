@@ -33,3 +33,8 @@ def copytree(src, dst):
 
     copystat(src, dst)
     _make_writable(dst)
+
+
+def get_sys_user():
+    import getpass
+    return getpass.getuser()
