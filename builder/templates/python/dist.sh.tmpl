@@ -16,6 +16,7 @@ function package() {
 
 function clean() {
     rm -rf build/ *.egg-info/ dist/
+    find . -name "__pycache__"  | xargs rm -rf
 }
 
 
