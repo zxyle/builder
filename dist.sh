@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
+name="builder"
 
 function install() {
     package
-    pip uninstall -y builder
-    pip install dist/builder-0.0.1-py3-none-any.whl
+    pip uninstall -y $name
+    for x in `ls dist/*.whl`; do pip install $x; done
 }
 
 function package() {
-  clean
-  pip install -U wheel twine setuptools
-  python3 setup.py sdist bdist_wheel
+    clean
+    pip install -U wheel twine setuptools
+    python3 setup.py sdist bdist_wheel
 }
 
 function clean() {
-    rm -rf build/ builder.egg-info/ dist/
+    rm -rf build/ *.egg-info/ dist/
 }
 
 

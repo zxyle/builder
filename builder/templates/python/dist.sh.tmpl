@@ -1,22 +1,31 @@
 #!/usr/bin/env bash
 
+name="{{ project_name }}"
 
 function install() {
-    rm -rf build/ {{ project_name }}.egg-info/ dist/
+    package
+    pip uninstall -y $name
+    for x in `ls dist/*.whl`; do pip install $x; done
+}
+
+function package() {
+    clean
+    pip install -U wheel twine setuptools
     python3 setup.py sdist bdist_wheel
-    pip uninstall -y {{ project_name }}
-    pip install dist/{{ project_name }}-0.0.1-py3-none-any.whl
+}
+
+function clean() {
+    rm -rf build/ *.egg-info/ dist/
 }
 
 
 function publish() {
-   pip install -U wheel twine setuptools
-   python setup.py sdist bdist_wheel
+   package
    twine upload dist/*
 }
 
 function usage() {
-    echo "Usage: sh dist.sh [install|publish]"
+    echo "Usage: sh dist.sh [clean|package|install|publish]"
     exit 1
 }
 
@@ -27,8 +36,14 @@ function test() {
 
 #根据输入参数，选择执行对应方法，不输入则执行使用说明
 case "$1" in
+  "clean")
+    clean
+    ;;
   "install")
     install
+    ;;
+  "package")
+    package
     ;;
   "publish")
     publish
