@@ -27,7 +27,13 @@ DEPENDENCIES = [
     'certifi',
     'requests',
     'MarkupSafe',
-    'Jinja2'
+    'Jinja2',
+    'python-editor',
+    'blessed',
+    'readchar',
+    'six',
+    'wcwidth',
+    'inquirer',
 ]
 
 MIRROR = "mirrors.cloud.tencent.com/pypi"
