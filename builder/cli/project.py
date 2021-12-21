@@ -264,14 +264,12 @@ class PythonProject(Base):
         self.docker_support()
         self.empty_files.extend([
             "requirements.txt",
-            "main.py",
             "setup.cfg",
             "tests/__init__.py",
             f"{project_name}/__init__.py",
             "scripts/__init__.py",
             "docs/guide.md",
             "docs/TODO.md",
-            "MANIFEST.in",
         ])
         self.after()
 
