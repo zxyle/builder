@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 name="builder"
+mirror="https://mirrors.aliyun.com/pypi/simple/"
 
 function install() {
     package
@@ -10,7 +11,8 @@ function install() {
 
 function package() {
     clean
-    pip install -U wheel twine setuptools
+    pip install -U wheel twine setuptools -i $mirror
+    pip install -r requirements.txt -i $mirror
     python3 setup.py sdist bdist_wheel
 }
 

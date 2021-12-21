@@ -87,10 +87,13 @@ class Base:
     # 复制到目标目录
     # 渲染模板
     def copy_template(self, temp_name, dst, project_name):
-        # 复制模板目录到目标目录下
-        tempdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/{temp_name}")
+        temps = [temp_name, "common"]
         target_dir = os.path.join(dst, project_name)
-        copytree(tempdir, target_dir)
+        # 复制模板目录到目标目录下
+        for temp in temps:
+            tempdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), f"templates/{temp}")
+            copytree(tempdir, target_dir)
+
         self.output_dir = target_dir
         return target_dir
 
@@ -200,6 +203,7 @@ class SpringProject(Base):
         self.input_prompt()
         group = self.metadata.get("group")
         artifact = self.metadata.get("artifact")
+        self.metadata.update({"projectName": artifact})
         base_package = f"{group}.{sanitize(artifact)}"
         java_version = self.metadata.get("javaVersion")
         properties.extend([
@@ -244,7 +248,7 @@ class SpringProject(Base):
 class PythonProject(Base):
     temp_name = "python"
     questions = [
-        inquirer.Text('project_name', message="Please enter a project_name", default="awesome"),
+        inquirer.Text('projectName', message="Please enter a projectName", default="awesome"),
         inquirer.Text('author', message="What's your name", default=get_sys_user()),
         inquirer.List('license',
                       message="license?",
@@ -254,7 +258,7 @@ class PythonProject(Base):
 
     def run(self, dst):
         self.input_prompt()
-        project_name = self.metadata.get("project_name")
+        project_name = self.metadata.get("projectName")
         target_dir = self.copy_template(self.temp_name, dst, project_name)
         self.render(target_dir, self.metadata)
         self.docker_support()

@@ -25,7 +25,9 @@ def create(temp_name, dst):
     instance = clazz()
     instance.run(dst)
 
-    print(f"创建{temp_name}项目完成, 在\"{instance.output_dir}\".")
+    # print(f"创建{temp_name}项目完成, 在\"{instance.output_dir}\".")
+    print(f"{temp_name} project created successfully! 🎉")
+    print(f"Location at \"{instance.output_dir}\".")
 
 
 if __name__ == '__main__':
