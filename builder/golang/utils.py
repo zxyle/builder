@@ -1,12 +1,12 @@
-import re
 import os
+import re
 
 DEFAULT_GO_VERSION = "1.16"
 
 
 def find_go_version():
     cmd = os.popen("go version")
-    pattern = re.compile("\d+\.\d+\.\d+")
+    pattern = re.compile(r"\d+\.\d+\.\d+")
     text = cmd.read()
     match = pattern.search(text)
     if match:
@@ -15,4 +15,3 @@ def find_go_version():
         return version
 
     return DEFAULT_GO_VERSION
-
