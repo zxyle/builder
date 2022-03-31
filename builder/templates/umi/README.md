@@ -13,3 +13,8 @@ Start the dev server,
 ```bash
 $ yarn start
 ```
+
+Deploy to server,
+```bash
+$ sh deploy.sh publish
+```
